@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "UniApp音乐",
+  "onReachBottomDistance": 0,
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "index-swiper": "/components/index-swiper/index-swiper",
+    "index-playlist": "/components/index-playlist/index-playlist"
+  }
+}

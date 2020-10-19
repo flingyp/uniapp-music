@@ -1,0 +1,54 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/tabBar/index/index",
+			"style": {
+				"navigationBarTitleText": "UniApp音乐",
+				"onReachBottomDistance": 0,
+				"enablePullDownRefresh": true
+			}
+		}
+	    ,{
+            "path" : "pages/tabBar/found/found",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/tabBar/my/my",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/playlist_detail/playlist_detail",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "UniApp音乐",
+		"navigationBarBackgroundColor": "#d43c43",
+		"backgroundColor": "#d43c43"
+	},
+	"tabBar": {
+	    "color": "#474747",
+	    "selectedColor": "#d43c43", 
+	    "list": [
+	      {
+	        "pagePath": "pages/tabBar/index/index",
+	        "text": "音乐",
+	        "iconPath": "static/imgs/music.png",
+	        "selectedIconPath": "static/imgs/music-actived.png"
+	      },
+	      {
+	        "pagePath": "pages/tabBar/found/found",
+	        "text": "发现",
+	        "iconPath": "static/imgs/blog.png",
+	        "selectedIconPath": "static/imgs/blog-actived.png"
+	      },
+	      {
+	        "pagePath": "pages/tabBar/my/my",
+	        "text": "我的",
+	        "iconPath": "static/imgs/profile.png",
+	        "selectedIconPath": "static/imgs/profile-actived.png"
+	      }
+	    ]
+  }
+}

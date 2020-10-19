@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/tabBar/index/index",
+    "pages/tabBar/found/found",
+    "pages/tabBar/my/my",
+    "pages/playlist_detail/playlist_detail"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "UniApp音乐",
+    "navigationBarBackgroundColor": "#d43c43",
+    "backgroundColor": "#d43c43"
+  },
+  "tabBar": {
+    "color": "#474747",
+    "selectedColor": "#d43c43",
+    "list": [
+      {
+        "pagePath": "pages/tabBar/index/index",
+        "text": "音乐",
+        "iconPath": "static/imgs/music.png",
+        "selectedIconPath": "static/imgs/music-actived.png"
+      },
+      {
+        "pagePath": "pages/tabBar/found/found",
+        "text": "发现",
+        "iconPath": "static/imgs/blog.png",
+        "selectedIconPath": "static/imgs/blog-actived.png"
+      },
+      {
+        "pagePath": "pages/tabBar/my/my",
+        "text": "我的",
+        "iconPath": "static/imgs/profile.png",
+        "selectedIconPath": "static/imgs/profile-actived.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
