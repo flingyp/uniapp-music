@@ -4,7 +4,7 @@
 		
 		<view class="playlist-container">
 			<block v-for="(item, index) in playlistData" :key="index">
-				<view @tap="dumpPlaylistDetail(item)">
+				<view @tap="jumpPlaylistDetail(item)">
 					<index-playlist :playlist="item"></index-playlist>
 				</view>
 			</block>
@@ -81,7 +81,7 @@
 				})
 			},
 			// 跳转歌单详情页面
-			dumpPlaylistDetail(item) {
+			jumpPlaylistDetail(item) {
 				const playlist_item = item
 				uni.navigateTo({
 					url: "../../playlist_detail/playlist_detail?item="+ encodeURIComponent(JSON.stringify(playlist_item))

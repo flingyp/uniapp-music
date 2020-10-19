@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/index-playlist/index-playlist":1,"components/index-swiper/index-swiper":1,"components/playlist-musiclist/playlist-musiclist":1};
+/******/ 		var cssChunks = {"components/index-playlist/index-playlist":1,"components/index-swiper/index-swiper":1,"components/playlist-musiclist/playlist-musiclist":1,"components/progress-bar/progress-bar":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/index-playlist/index-playlist":"components/index-playlist/index-playlist","components/index-swiper/index-swiper":"components/index-swiper/index-swiper","components/playlist-musiclist/playlist-musiclist":"components/playlist-musiclist/playlist-musiclist"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/index-playlist/index-playlist":"components/index-playlist/index-playlist","components/index-swiper/index-swiper":"components/index-swiper/index-swiper","components/playlist-musiclist/playlist-musiclist":"components/playlist-musiclist/playlist-musiclist","components/progress-bar/progress-bar":"components/progress-bar/progress-bar"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

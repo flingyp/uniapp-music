@@ -12,7 +12,7 @@
 		</view>
 		
 		<!-- 歌单的音乐列表组件 -->
-		<playlist-musiclist :musiclistData="listData"></playlist-musiclist>
+		<playlist-musiclist :musiclistData="listData" @goPlayer="jumpToPlayer"></playlist-musiclist>
 	</view>
 </template>
 
@@ -38,6 +38,12 @@
 			original() {
 				request(this.playlistDetail_url, {id: this.listInfo.id}).then((res) => {
 					this.listData = res.data.playlist.tracks
+				})
+			}, 
+			// 跳转 播放器页面
+			jumpToPlayer(songInfo) {
+				uni.navigateTo({
+					url:"../player/player?song="+ encodeURIComponent(JSON.stringify(songInfo))
 				})
 			}
 		}

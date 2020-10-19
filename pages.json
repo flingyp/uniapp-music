@@ -20,6 +20,10 @@
             "path" : "pages/playlist_detail/playlist_detail",
             "style" : {}
         }
+        ,{
+            "path" : "pages/player/player",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

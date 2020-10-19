@@ -3,7 +3,8 @@
     "pages/tabBar/index/index",
     "pages/tabBar/found/found",
     "pages/tabBar/my/my",
-    "pages/playlist_detail/playlist_detail"
+    "pages/playlist_detail/playlist_detail",
+    "pages/player/player"
   ],
   "subPackages": [],
   "window": {
