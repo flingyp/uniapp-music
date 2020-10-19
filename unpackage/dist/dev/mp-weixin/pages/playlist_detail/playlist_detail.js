@@ -93,8 +93,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  hxNavbar: function() {
+    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 80))
+  },
   playlistMusiclist: function() {
-    return __webpack_require__.e(/*! import() | components/playlist-musiclist/playlist-musiclist */ "components/playlist-musiclist/playlist-musiclist").then(__webpack_require__.bind(null, /*! @/components/playlist-musiclist/playlist-musiclist.vue */ 54))
+    return __webpack_require__.e(/*! import() | components/playlist-musiclist/playlist-musiclist */ "components/playlist-musiclist/playlist-musiclist").then(__webpack_require__.bind(null, /*! @/components/playlist-musiclist/playlist-musiclist.vue */ 62))
   }
 }
 var render = function() {
@@ -153,6 +156,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -171,11 +176,16 @@ var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.
 //
 //
 //
-var _default = { data: function data() {return { playlistDetail_url: "/playlist/detail", // 歌单消息
+//
+//
+var _default = { data: function data() {return { config: { title: 'UniApp-Music', color: '#fff', backgroundColor: [1, ['#7f8c8d', '#8e44ad', '#3498db', '#c0392b']] }, playlistDetail_url: "/playlist/detail", // 歌单消息
       listInfo: {}, // 歌单歌曲数据
       listData: [] };}, onLoad: function onLoad(option) {// 获取 首页出来的 歌单消息数据
     this.listInfo = JSON.parse(decodeURIComponent(option.item)); // 获取歌单详情数据
-    this.original();}, methods: { original: function original() {var _this = this;(0, _request.default)(this.playlistDetail_url, { id: this.listInfo.id }).then(function (res) {_this.listData = res.data.playlist.tracks;});},
+    this.original();}, methods: { original: function original() {var _this = this;(0, _request.default)(this.playlistDetail_url, { id: this.listInfo.id }).then(function (res) {
+        _this.listData = res.data.playlist.tracks;
+      });
+    },
     // 跳转 播放器页面
     jumpToPlayer: function jumpToPlayer(songInfo) {
       uni.navigateTo({

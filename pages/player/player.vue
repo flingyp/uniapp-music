@@ -1,5 +1,7 @@
 <template>
 	<view class="player-box">
+		<!-- <hx-navbar></hx-navbar> -->
+		
 		<!-- 页面 背景图片 -->
 		<view class="player-container" :style="{background:`url(${songInfo.al.picUrl}) no-repeat top center`}"></view>
 		<!-- 遮罩层 -->

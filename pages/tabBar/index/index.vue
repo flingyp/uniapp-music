@@ -1,5 +1,8 @@
 <template>
 	<view class="content">
+		
+		<!-- <hx-navbar :config="config"></hx-navbar> -->
+		
 		<index-swiper :swiperImgs="swiperData"></index-swiper>
 		
 		<view class="playlist-container">
@@ -17,6 +20,12 @@
 	export default {
 		data() {
 			return {
+				// 导航栏配置项
+				config: {
+					title: 'UniApp-Music',
+					color: '#fff',
+					backgroundColor: [1,['#7f8c8d','#8e44ad','#3498db','#c0392b']]
+				},
 				swiper_url: "/banner",
 				playlist_url: "/personalized",
 				// 轮播数据

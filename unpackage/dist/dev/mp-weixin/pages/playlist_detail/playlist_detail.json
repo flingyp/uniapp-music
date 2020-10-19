@@ -1,5 +1,7 @@
 {
+  "navigationStyle": "custom",
   "usingComponents": {
+    "hx-navbar": "/components/hx-navbar/hx-navbar",
     "playlist-musiclist": "/components/playlist-musiclist/playlist-musiclist"
   }
 }

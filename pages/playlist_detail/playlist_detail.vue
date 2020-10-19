@@ -1,5 +1,7 @@
 <template>
 	<view class="playlist-box">
+		<hx-navbar :config="config"></hx-navbar>
+		
 		<view class="detail-container" :style="{background: `url(${listInfo.picUrl}) no-repeat top center`}"></view>
 		<!-- 遮罩层 -->
 		<view class="detail-mask"></view>
@@ -21,6 +23,11 @@
 	export default {
 		data() {
 			return {
+				config: {
+					title: 'UniApp-Music',
+					color: '#fff',
+					backgroundColor: [1,['#7f8c8d','#8e44ad','#3498db','#c0392b']]
+				},
 				playlistDetail_url: "/playlist/detail",
 				// 歌单消息
 				listInfo: {},
@@ -66,7 +73,7 @@
 			width: 100%;
 			height: 100%;
 			background-color: #333;
-			top: 0;
+			top: 20%;
 			left: 0;
 			z-index: -1;
 		}
@@ -75,7 +82,7 @@
 			position: absolute;
 			width: 100%;
 			height: 100%;
-			top: 0;
+			top: 20%;
 			left: 0;
 			display: flex;
 			align-items: center;

@@ -5,7 +5,8 @@
 			"style": {
 				"navigationBarTitleText": "UniApp音乐",
 				"onReachBottomDistance": 0,
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"navigationStyle":"custom"
 			}
 		}
 	    ,{
@@ -18,7 +19,9 @@
         }
         ,{
             "path" : "pages/playlist_detail/playlist_detail",
-            "style" : {}
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
         ,{
             "path" : "pages/player/player",
@@ -28,8 +31,8 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "UniApp音乐",
-		"navigationBarBackgroundColor": "#d43c43",
-		"backgroundColor": "#d43c43"
+		"navigationBarBackgroundColor": "#e74c3c",
+		"backgroundColor": "#e74c3c"
 	},
 	"tabBar": {
 	    "color": "#474747",
