@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 	<!-- 歌曲进行时间 -->
-	<text class="time">00:00</text>
+	<text class="time">{{songTimeInfo.ingTime}}</text>
 	<view class="control">
 		<movable-area class="movable-area">
 	      <movable-view direction="horizontal" damping="1000" class="movable-view"  />
@@ -9,7 +9,7 @@
 	    <progress stroke-width="4" backgroundColor="#969696" activeColor="#fff"></progress>
 	</view>
 	<!-- 歌曲总时间 -->
-	<text class="time">02.53</text>
+	<text class="time">{{songTimeInfo.endTime}}</text>
 	</view>
 </template>
 
@@ -17,7 +17,10 @@
 	export default {
 		data() {
 			return {
-				
+				songTimeInfo: {
+					ingTime: "00:00",
+					endTime: "00:00"
+				},
 			};
 		}
 	}

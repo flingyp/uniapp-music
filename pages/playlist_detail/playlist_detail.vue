@@ -20,19 +20,21 @@
 
 <script>
 	import request from '../../api/request.js'
+	import con from '../../api/navabar-config.js'
+	import eventBus from '../../api/eventBus.js'
 	export default {
 		data() {
 			return {
-				config: {
-					title: 'UniApp-Music',
-					color: '#fff',
-					backgroundColor: [1,['#7f8c8d','#8e44ad','#3498db','#c0392b']]
-				},
+				config: con,
 				playlistDetail_url: "/playlist/detail",
 				// 歌单消息
 				listInfo: {},
 				// 歌单歌曲数据
-				listData: []
+				listData: [],
+				// 下一首歌曲的下标值
+				goPlayNextSongIndex: 0,
+				// 上一首歌曲的下标值
+				goPrevSongIndex: 0
 			};
 		},
 		onLoad(option) {
@@ -40,6 +42,28 @@
 			this.listInfo = JSON.parse(decodeURIComponent(option.item))
 			// 获取歌单详情数据
 			this.original()
+			
+			// 兄弟组件传值 player页面 播放下一首按钮的事件
+			eventBus.$on('getNextSongInfo', (currentIndex) => {
+				// currentIndex 问当前播放歌曲的下标值
+				this.goPlayNextSongIndex = ++ currentIndex;
+				if(currentIndex === this.listData.length) { // 判断 如果当前是歌单中的最后一首歌曲
+					// 返回歌单中的第一首歌曲
+					this.goPlayNextSongIndex = 0
+				}
+				// 把 值 传递 回给 player页面
+				eventBus.$emit('nextSongInfo', this.listData[this.goPlayNextSongIndex], this.goPlayNextSongIndex)
+			})
+			
+			eventBus.$on('getPrevSongInfo', (currentIndex) => {
+				this.goPrevSongIndex = currentIndex - 1
+				if(currentIndex === 0) {
+					// 返回歌单中的最后一首歌曲下标
+					this.goPrevSongIndex = this.listData.length - 1
+				}
+				// 把 值 传递 回给 player页面
+				eventBus.$emit('prevSongInfo', this.listData[this.goPrevSongIndex], this.goPrevSongIndex)
+			})
 		},
 		methods: {
 			original() {
@@ -48,9 +72,9 @@
 				})
 			}, 
 			// 跳转 播放器页面
-			jumpToPlayer(songInfo) {
+			jumpToPlayer(songInfo, songIndex) {
 				uni.navigateTo({
-					url:"../player/player?song="+ encodeURIComponent(JSON.stringify(songInfo))
+					url:`../player/player?index=${songIndex}&song=`+ encodeURIComponent(JSON.stringify(songInfo))
 				})
 			}
 		}
@@ -116,6 +140,16 @@
 				}
 			}
 		}
+		
+		// #ifdef MP-WEIXIN
+		.detail-mask {
+			top: 33%;
+		}
+		
+		.detail-info {
+			top: 33%;
+		}
+		// #endif
 	}
 
 </style>

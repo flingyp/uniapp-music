@@ -5,6 +5,7 @@ import App from './App'
 import hxNavbar from "./components/hx-navbar/hx-navbar"
 Vue.component('hx-navbar',hxNavbar)
 
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'

@@ -1,7 +1,7 @@
 <template>
 	<view class="musiclist-box">
 		<block v-for="(item, index) in musiclistData" :key="index">
-		  <view class="musiclist-container" @tap="jumpPlayer(item)">
+		  <view class="musiclist-container" @tap="jumpPlayer(item, index)">
 		    <view class="musiclist-index">{{index+1}}</view>
 		    <view class="musiclist-info">
 		      <view class="musiclist-name">
@@ -27,8 +27,8 @@
 			};
 		},
 		methods: {
-			jumpPlayer(info) {
-				this.$emit("goPlayer", info)
+			jumpPlayer(info, index) {
+				this.$emit("goPlayer", info, index)
 			}
 		}
 	}

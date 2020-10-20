@@ -1,9 +1,9 @@
 {
-  "navigationBarTitleText": "UniApp音乐",
   "onReachBottomDistance": 0,
   "enablePullDownRefresh": true,
   "navigationStyle": "custom",
   "usingComponents": {
+    "hx-navbar": "/components/hx-navbar/hx-navbar",
     "index-swiper": "/components/index-swiper/index-swiper",
     "index-playlist": "/components/index-playlist/index-playlist"
   }

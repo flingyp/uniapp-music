@@ -92,4 +92,10 @@
   font-weight: 400;
   color: #fff;
 }
+.playlist-box .detail-mask.data-v-79f1f2c4 {
+  top: 33%;
+}
+.playlist-box .detail-info.data-v-79f1f2c4 {
+  top: 33%;
+}
 

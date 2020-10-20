@@ -10,8 +10,8 @@
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "UniApp音乐",
-    "navigationBarBackgroundColor": "#e74c3c",
-    "backgroundColor": "#e74c3c"
+    "navigationBarBackgroundColor": "#8e44ad",
+    "backgroundColor": "#8e44ad"
   },
   "tabBar": {
     "color": "#474747",
