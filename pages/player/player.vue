@@ -74,11 +74,6 @@
 				this.songIndex = prevSongIndex
 				this.playSong(this.songID)
 			})
-			
-			// 歌曲播放结束后， 自动播放下一首
-			this.endNextSong()
-			
-		
 		},
 		methods: {
 			// 播放歌曲函数
@@ -120,13 +115,6 @@
 				// 通过 兄弟组件方式的传值来向 player组件传递数据
 				eventBus.$emit('getPrevSongInfo', this.songIndex)
 			},
-			// 歌曲播放结束后， 自动播放下一首
-			endNextSong() {
-				this.innerAudioContext.onEnded(() => {
-					// 播放下一首歌曲
-					eventBus.$emit('getNextSongInfo', this.songIndex)
-				})
-			}
 		},
 		watch: {
 			isPlay: function() {

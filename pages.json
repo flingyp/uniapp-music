@@ -15,7 +15,9 @@
         }
         ,{
             "path" : "pages/tabBar/my/my",
-            "style" : {}
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
         ,{
             "path" : "pages/playlist_detail/playlist_detail",

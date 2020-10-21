@@ -10,7 +10,7 @@
 - [uniapp文档](https://uniapp.dcloud.io/)
 
 
-目前实现功能： 
+项目实现进度： 
 
 1. 首页页面index (用于展示轮播图、 各类歌单)
 
