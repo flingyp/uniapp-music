@@ -10,30 +10,29 @@
 		  <view class="player-disc" :class="{play: isPlay}">
 		    <image class="player-img" :class="{rotation:isPlay}" :src="songInfo.al.picUrl"></image>
 		  </view>
-		
-		  <!-- 进度条 -->
-		  <view class="progress-bar">
-		    <progress-bar :currentTime="currentTime"></progress-bar>
+		  
+		  <!-- #ifdef H5 -->
+		  <view class="audio">
+			  <imt-audio :src="song_url" autoplay continue @next="playNextSong" @prev="playPrevSong" @play="controlPlay" color="#ecf0f1"></imt-audio>
 		  </view>
-		
-		  <!-- 控制面板 -->
-		  <view class="control">
-		      <text class="iconfont icon-shangyishoushangyige" @tap="playPrevSong"></text>
-		      <text class="iconfont" :class="isPlay?'icon-zanting1':'icon-bofang1'" @tap="controlPlay"></text>
-		      <text class="iconfont icon-xiayigexiayishou" @tap="playNextSong"></text>
+		  <!-- #endif -->
+		  
+		  <!-- #ifdef MP-WEIXIN -->
+		  <view class="audio">
+				<imt-audio :src="song_url" autoplay continue @next="playNextSong" @prev="playPrevSong" @play="controlPlay" color="#ecf0f1"></imt-audio>
 		  </view>
+		  <!-- #endif -->
+		  
 		</view>
 	</view>
 </template>
 
 <script>
-	import con from '../../api/navabar-config.js'
 	import request from '../../api/request.js'
 	import eventBus from '../../api/eventBus.js'
 	export default {
 		data() {
 			return {
-				config: con,
 				// 歌曲信息
 				songInfo: {},
 				// 歌曲 ID
@@ -46,27 +45,15 @@
 				song_url: "",
 				// 歌曲是否播放
 				isPlay: false,
-				// 音频 API
-				innerAudioContext: {},
-				// 音乐开始的时间
-				currentTime: 0,
-				// 音乐总时间
-				duration: 0
 			};
 		},
 		onLoad(option) { 
 			// uniapp 音频 API
-			this.innerAudioContext = uni.createInnerAudioContext()
 			this.songInfo = JSON.parse(decodeURIComponent(option.song))
 			// 歌曲 id
 			this.songID = JSON.parse(decodeURIComponent(option.song)).id
 			// 歌曲在歌单数组中的下标值
 			this.songIndex = option.index
-			
-			if(this.innerAudioContext.paused) {
-				this.innerAudioContext.stop()
-				this.isPlay = false
-			}
 			
 			this.playSong(this.songID)
 			
@@ -81,25 +68,17 @@
 			})
 			// playlist_detail 把上一首歌曲信息 传递过来
 			eventBus.$on('prevSongInfo', (prevSongInfo, prevSongIndex) => {
-				// console.log(prevSongInfo, prevSongIndex)
+				console.log(prevSongInfo, prevSongIndex)
 				this.songInfo = prevSongInfo
 				this.songID = prevSongInfo.id
 				this.songIndex = prevSongIndex
 				this.playSong(this.songID)
 			})
 			
-			this.innerAudioContext.onEnded(() => {
-				// 播放下一首歌曲
-				eventBus.$emit('getNextSongInfo', this.songIndex)
-			})
+			// 歌曲播放结束后， 自动播放下一首
+			this.endNextSong()
+			
 		
-		},
-		onUnload() {
-			// 在页面卸载 或者 点击返回后 暂停正在播放的歌曲
-			// this.innerAudioContext.paused 为 false 表示未暂停
-			if(!this.innerAudioContext.paused) {
-				this.innerAudioContext.destroy()
-			}
 		},
 		methods: {
 			// 播放歌曲函数
@@ -112,8 +91,6 @@
 				})
 				request(this.songUrl, {id: id}).then((res) => {
 					this.song_url = res.data.data[0].url
-					this.innerAudioContext.src = this.song_url
-					this.innerAudioContext.autoplay = true
 					uni.setNavigationBarTitle({
 					    title: this.songInfo.name
 					});
@@ -123,21 +100,13 @@
 			},
 			
 			// 控制歌曲的播放和暂停
-			controlPlay() {
-				// 改变 播放状态
-				this.isPlay = !this.isPlay			
-				if(this.isPlay) {
-					// 播放歌曲
-					this.innerAudioContext.play()
-				} else { 
-					// 暂停歌曲
-					this.innerAudioContext.pause()
-				}
+			controlPlay(noPlay) {
+				// 改变 播放状态 noPlay 是 false 的就是歌曲在播放 | true 是歌曲未播放
+				this.isPlay = !noPlay			
 			}, 
 			// 播放下一首歌曲
 			playNextSong() {
-				// 播放下一首歌曲时， 暂停当前播放歌曲
-				this.innerAudioContext.stop()
+				// 播放下一首歌曲时
 				this.isPlay = false
 				// 获取歌曲下标值 到 歌单列表页面 
 				// 通过 兄弟组件方式的传值来向 player组件传递数据
@@ -145,30 +114,28 @@
 			},
 			// 播放上一首歌曲
 			playPrevSong() {
-				// 播放上一首歌曲时， 暂停当前播放歌曲
-				this.innerAudioContext.stop()
+				// 播放上一首歌曲时
 				this.isPlay = false
 				// 获取歌曲下标值 到 歌单列表页面
 				// 通过 兄弟组件方式的传值来向 player组件传递数据
 				eventBus.$emit('getPrevSongInfo', this.songIndex)
 			},
+			// 歌曲播放结束后， 自动播放下一首
+			endNextSong() {
+				this.innerAudioContext.onEnded(() => {
+					// 播放下一首歌曲
+					eventBus.$emit('getNextSongInfo', this.songIndex)
+				})
+			}
 		},
 		watch: {
 			isPlay: function() {
 				if(this.isPlay) { // 歌曲播放
-					this.innerAudioContext.onPlay(() => {
-						console.log("开始播放歌曲")
-						console.log(this.innerAudioContext)
-					})
+					console.log("开始播放歌曲")
 				} else { // 歌曲暂停
-					this.innerAudioContext.onPause(()=>{
-						console.log("开始暂停歌曲")
-						console.log(this.innerAudioContext.duration)
-					})
+					console.log("暂停播放歌曲")
 				}
 			},
-			
-			
 		}
 	}
 </script>
@@ -207,6 +174,14 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
+		display: flex;
+		justify-content: center;
+		
+		.audio {
+			width: 90%;
+			position: absolute;
+			bottom: 10%;
+		}
 		
 		
 		.player-disc {
@@ -259,37 +234,6 @@
 		.play.player-disc::after {
 		  transform: rotate(0deg);
 		}
-		
-		.progress-bar{
-			position: absolute;
-			width: 90%;
-			left: 50%;
-			transform: translateX(-50%);
-			bottom: 24%;
-		}
-		
-		.control{
-			position: absolute;
-			bottom: 8%;
-			left: 50%;
-			transform: translateX(-50%);
-			display: flex;
-			align-items: center;
-			
-			.iconfont {
-				color: red;
-			}
-			
-			.icon-shangyishoushangyige, .icon-xiayigexiayishou{
-			  font-size: 80rpx;
-			}
-			
-			.icon-bofang1, .icon-zanting1{
-			  font-size: 120rpx;
-			  margin: 0 50rpx;
-			}
-		}
-		
 	}
 	
 }

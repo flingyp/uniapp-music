@@ -93,8 +93,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
-  progressBar: function() {
-    return __webpack_require__.e(/*! import() | components/progress-bar/progress-bar */ "components/progress-bar/progress-bar").then(__webpack_require__.bind(null, /*! @/components/progress-bar/progress-bar.vue */ 78))
+  imtAudio: function() {
+    return __webpack_require__.e(/*! import() | components/imt-audio/imt-audio */ "components/imt-audio/imt-audio").then(__webpack_require__.bind(null, /*! @/components/imt-audio/imt-audio.vue */ 78))
   }
 }
 var render = function() {
@@ -163,7 +163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../api/navabar-config.js */ 18));
+
 var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.js */ 17));
 var _eventBus = _interopRequireDefault(__webpack_require__(/*! ../../api/eventBus.js */ 39));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -193,49 +193,28 @@ var _eventBus = _interopRequireDefault(__webpack_require__(/*! ../../api/eventBu
 //
 //
 //
-var _default = { data: function data() {return { config: _navabarConfig.default, // 歌曲信息
+//
+var _default = { data: function data() {return { // 歌曲信息
       songInfo: {}, // 歌曲 ID
       songID: 0, // 歌曲下标
       songIndex: 0, // 请求歌曲播放地址
       songUrl: "/song/url", // 歌曲播放的地址
       song_url: "", // 歌曲是否播放
-      isPlay: false, // 音频 API
-      innerAudioContext: {}, // 音乐开始的时间
-      currentTime: 0, // 音乐总时间
-      duration: 0 };}, onLoad: function onLoad(option) {var _this = this; // uniapp 音频 API
-    this.innerAudioContext = uni.createInnerAudioContext();this.songInfo = JSON.parse(decodeURIComponent(option.song)); // 歌曲 id
+      isPlay: false };}, onLoad: function onLoad(option) {var _this = this; // uniapp 音频 API
+    this.songInfo = JSON.parse(decodeURIComponent(option.song)); // 歌曲 id
     this.songID = JSON.parse(decodeURIComponent(option.song)).id; // 歌曲在歌单数组中的下标值
-    this.songIndex = option.index;if (this.innerAudioContext.paused) {this.innerAudioContext.stop();this.isPlay = false;}this.playSong(this.songID);
-
-    // playlist_detail 把下一首歌曲信息 传递过来
-    _eventBus.default.$on('nextSongInfo', function (nextSongInfo, nextSongIndex) {
-      // console.log(nextSongInfo ,nextSongIndex)
-      _this.songInfo = nextSongInfo;
-      _this.songID = nextSongInfo.id;
-      _this.songIndex = nextSongIndex;
-      _this.playSong(_this.songID);
-    });
-    // playlist_detail 把上一首歌曲信息 传递过来
-    _eventBus.default.$on('prevSongInfo', function (prevSongInfo, prevSongIndex) {
-      // console.log(prevSongInfo, prevSongIndex)
-      _this.songInfo = prevSongInfo;
-      _this.songID = prevSongInfo.id;
+    this.songIndex = option.index;this.playSong(this.songID); // playlist_detail 把下一首歌曲信息 传递过来
+    _eventBus.default.$on('nextSongInfo', function (nextSongInfo, nextSongIndex) {// console.log(nextSongInfo ,nextSongIndex)
+      _this.songInfo = nextSongInfo;_this.songID = nextSongInfo.id;_this.songIndex = nextSongIndex;_this.playSong(_this.songID);}); // playlist_detail 把上一首歌曲信息 传递过来
+    _eventBus.default.$on('prevSongInfo', function (prevSongInfo, prevSongIndex) {console.log(prevSongInfo, prevSongIndex);_this.songInfo = prevSongInfo;_this.songID = prevSongInfo.id;
       _this.songIndex = prevSongIndex;
       _this.playSong(_this.songID);
     });
 
-    this.innerAudioContext.onEnded(function () {
-      // 播放下一首歌曲
-      _eventBus.default.$emit('getNextSongInfo', _this.songIndex);
-    });
+    // 歌曲播放结束后， 自动播放下一首
+    this.endNextSong();
 
-  },
-  onUnload: function onUnload() {
-    // 在页面卸载 或者 点击返回后 暂停正在播放的歌曲
-    // this.innerAudioContext.paused 为 false 表示未暂停
-    if (!this.innerAudioContext.paused) {
-      this.innerAudioContext.destroy();
-    }
+
   },
   methods: {
     // 播放歌曲函数
@@ -248,8 +227,6 @@ var _default = { data: function data() {return { config: _navabarConfig.default,
 
       (0, _request.default)(this.songUrl, { id: id }).then(function (res) {
         _this2.song_url = res.data.data[0].url;
-        _this2.innerAudioContext.src = _this2.song_url;
-        _this2.innerAudioContext.autoplay = true;
         uni.setNavigationBarTitle({
           title: _this2.songInfo.name });
 
@@ -259,21 +236,13 @@ var _default = { data: function data() {return { config: _navabarConfig.default,
     },
 
     // 控制歌曲的播放和暂停
-    controlPlay: function controlPlay() {
-      // 改变 播放状态
-      this.isPlay = !this.isPlay;
-      if (this.isPlay) {
-        // 播放歌曲
-        this.innerAudioContext.play();
-      } else {
-        // 暂停歌曲
-        this.innerAudioContext.pause();
-      }
+    controlPlay: function controlPlay(noPlay) {
+      // 改变 播放状态 noPlay 是 false 的就是歌曲在播放 | true 是歌曲未播放
+      this.isPlay = !noPlay;
     },
     // 播放下一首歌曲
     playNextSong: function playNextSong() {
-      // 播放下一首歌曲时， 暂停当前播放歌曲
-      this.innerAudioContext.stop();
+      // 播放下一首歌曲时
       this.isPlay = false;
       // 获取歌曲下标值 到 歌单列表页面 
       // 通过 兄弟组件方式的传值来向 player组件传递数据
@@ -281,26 +250,26 @@ var _default = { data: function data() {return { config: _navabarConfig.default,
     },
     // 播放上一首歌曲
     playPrevSong: function playPrevSong() {
-      // 播放上一首歌曲时， 暂停当前播放歌曲
-      this.innerAudioContext.stop();
+      // 播放上一首歌曲时
       this.isPlay = false;
       // 获取歌曲下标值 到 歌单列表页面
       // 通过 兄弟组件方式的传值来向 player组件传递数据
       _eventBus.default.$emit('getPrevSongInfo', this.songIndex);
+    },
+    // 歌曲播放结束后， 自动播放下一首
+    endNextSong: function endNextSong() {var _this3 = this;
+      this.innerAudioContext.onEnded(function () {
+        // 播放下一首歌曲
+        _eventBus.default.$emit('getNextSongInfo', _this3.songIndex);
+      });
     } },
 
   watch: {
-    isPlay: function isPlay() {var _this3 = this;
+    isPlay: function isPlay() {
       if (this.isPlay) {// 歌曲播放
-        this.innerAudioContext.onPlay(function () {
-          console.log("开始播放歌曲");
-          console.log(_this3.innerAudioContext);
-        });
+        console.log("开始播放歌曲");
       } else {// 歌曲暂停
-        this.innerAudioContext.onPause(function () {
-          console.log("开始暂停歌曲");
-          console.log(_this3.innerAudioContext.duration);
-        });
+        console.log("暂停播放歌曲");
       }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
