@@ -1,10 +1,12 @@
 {
   "pages": [
+    "pages/register/register",
     "pages/tabBar/index/index",
     "pages/tabBar/found/found",
     "pages/tabBar/my/my",
     "pages/playlist_detail/playlist_detail",
-    "pages/player/player"
+    "pages/player/player",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -40,5 +42,5 @@
   "usingComponents": {
     "hx-navbar": "/components/hx-navbar/hx-navbar"
   },
-  "sitemapLocation": "sitemap83.json"
+  "sitemapLocation": "sitemap14.json"
 }

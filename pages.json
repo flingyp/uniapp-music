@@ -1,6 +1,10 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/register/register",
+		    "style" : {}
+		},
+		{
 			"path": "pages/tabBar/index/index",
 			"style": {
 				// "navigationBarTitleText": "UniApp音乐",
@@ -8,8 +12,8 @@
 				"enablePullDownRefresh": true,
 				"navigationStyle":"custom"
 			}
-		}
-	    ,{
+		},
+	    {
             "path" : "pages/tabBar/found/found",
             "style" : {}
         }
@@ -27,6 +31,10 @@
         }
         ,{
             "path" : "pages/player/player",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/login/login",
             "style" : {}
         }
     ],

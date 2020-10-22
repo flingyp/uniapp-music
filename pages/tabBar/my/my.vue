@@ -3,13 +3,10 @@
 		<hx-navbar :config="config"></hx-navbar>
 
 		<view class="my-author">
-			<!-- #ifndef H5 -->
-			<view v-if="isLogin" class="user-info">
-				<image src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132"></image>
-				<view>幻听</view>
+			<view class="user-info">
+				<image :src="avatar==''?default_avatar:avatar" @tap="setAvatar"></image>
+				<view>{{user_name==""?default_name:user_name}}</view>
 			</view>
-			<button v-else class="login-button" type="warn" open-type="getUserInfo" @getuserinfo="getUserInfo()">获取用户信息</button>
-			<!-- #endif -->
 		</view>
 
 		<view class="my-content">
@@ -31,6 +28,10 @@
 			</view>
 			<!-- #endif -->
 		</view>
+		
+		<view class="my-exit">
+			<button type="primary" @tap="exitLogin">退出登录</button>
+		</view>
 	</view>
 </template>
 
@@ -40,43 +41,71 @@ export default {
 	data() {
 		return {
 			config: con,
-			// 登录的服务供应商
-			provider: '',
-			isLogin: false,
+			default_avatar: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132",
+			default_name: "幻听",
 			avatar: "",
 			user_name: ""
 		};
 	},
 	onLoad() {
+		// 获取用户信息
+		const userInfo = uni.getStorageSync('userInfo')
+		console.log(userInfo)
+		this.user_name = userInfo.username
+		console.log(this.user_name)
 	},
 	methods: {
-		getUserInfo() {
-			// uni.getProvider（）获取服务商信息判断手机端是否安装了app
-			uni.getProvider({
-				// oauth  代表授权登录
-				service: 'oauth',
+		// 退出登录，返回登录页
+		exitLogin() {
+			// 弹出模态框， 问是否真的退出
+			uni.showModal({
+				title: "退出",
+				content: "是否要退出该账号",
+				showCancel: true,
 				success: (res) => {
-					// 登录
-					uni.login({
-						// 表示授权方式  如果不设置则弹出登录列表选择界面
-						provider: 'weixin',
-						success: (loginRes) => {
-							// 获取用户信息
-							uni.getUserInfo({
-								provider: 'weixin',
-								success: (infoRes) => {
-									console.log(infoRes);
-									this.avatar = infoRes.userInfo.avatarUrl
-									this.user_name = infoRes.userInfo.nickName
-									this.isLogin = true
-									console.log(this.avatar)
-									console.log(this.user_name)
-								}
-							});
-						}
-					});
+					if (res.confirm) {
+						uni.redirectTo({ url:"../../login/login" })
+						// 清除 用户信息 和 token
+						uni.removeStorageSync('token')
+						uni.removeStorageSync('userInfo')
+					} else if (res.cancel) {}
 				}
-			});
+			})
+		},
+		// 设置 用户的头像
+		setAvatar() {
+			// 1. 将头像传入 云存储中
+			uni.chooseImage({
+				count: 1,
+				sizeType: ['original'],
+				success: async (res) => {
+					if (res.tempFilePaths.length > 0) {
+						// 获取本地文件路径
+						let filePath = res.tempFilePaths[0]
+						const result = await uniCloud.uploadFile({
+							filePath: filePath,
+							cloudPath: `${this.user_name}.jpg`,
+							onUploadProgress: (progressEvent) => {
+								const percentCompleted = Math.round(((progressEvent.loaded * 100) / progressEvent.total))
+								if(percentCompleted === 100) {
+									// 上传完成
+									uni.showToast({
+										title: "上传完成",
+										icon: "success",
+										mask: true
+									})
+								}
+							}
+						})
+						// 上传云存储成功执行
+						if(result.success) {
+							this.avatar = result.fileID
+							// 将 云存储的图片地址 存储在云数据库中 调用云函数 upload_user_avatar
+							
+						}
+					}
+				}
+			})
 		}
 	}
 };
@@ -112,14 +141,6 @@ export default {
 				color: #fff;
 				margin-top: 5px;
 			}
-		}
-
-		.login-button {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 160px;
 		}
 	}
 
@@ -168,5 +189,22 @@ export default {
 			font-size: 16px;
 		}
 	}
+	
+	.my-exit {
+		box-sizing: border-box;
+		position: absolute;
+		width: 140px;
+		height: 40px;
+		bottom: 3%;
+		right: 1%;
+		
+		button {
+			width: 100%;
+			height: 100%;
+			line-height: 40px;
+		}
+	}
+	
+	
 }
 </style>

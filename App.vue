@@ -16,6 +16,7 @@
 <style>
 	/*每个页面公共css */
 	@import url("static/css/iconfont.css");
+	@import url("static/css/simplepro.css");
 	image {
 		width: 100%;
 		height: 100%;

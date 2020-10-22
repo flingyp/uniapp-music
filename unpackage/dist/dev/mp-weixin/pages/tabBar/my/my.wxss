@@ -62,14 +62,6 @@
   color: #fff;
   margin-top: 5px;
 }
-.my-box .my-author .login-button.data-v-22ae75d7 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  width: 160px;
-}
 .my-box .my-content.data-v-22ae75d7 {
   width: 80%;
   position: absolute;
@@ -126,5 +118,18 @@
 .my-box .my-content .my-found .icon-xiangyou.data-v-22ae75d7,
 .my-box .my-content .my-weixincode .icon-xiangyou.data-v-22ae75d7 {
   font-size: 16px;
+}
+.my-box .my-exit.data-v-22ae75d7 {
+  box-sizing: border-box;
+  position: absolute;
+  width: 140px;
+  height: 40px;
+  bottom: 3%;
+  right: 1%;
+}
+.my-box .my-exit button.data-v-22ae75d7 {
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
 }
 
