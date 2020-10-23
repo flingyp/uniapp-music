@@ -6,7 +6,8 @@
     "pages/tabBar/my/my",
     "pages/playlist_detail/playlist_detail",
     "pages/player/player",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/blogfabu/blogfabu"
   ],
   "subPackages": [],
   "window": {
@@ -41,6 +42,5 @@
   },
   "usingComponents": {
     "hx-navbar": "/components/hx-navbar/hx-navbar"
-  },
-  "sitemapLocation": "sitemap14.json"
+  }
 }

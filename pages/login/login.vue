@@ -8,7 +8,7 @@
 		<view class="content">
 			<view class="has-mglr-10 ">
 				<view class=" has-mgtb-10 ">
-					<input type="number" maxlength="11" v-model="login.phone" placeholder="请输入手机号" class="is-input1 " @input="BindInput" data-val="username" />
+					<input type="number" maxlength="11" v-model="login.phone" placeholder="请输入手机号" class="is-input1 " @input="BindInput" data-val="phonenumber" />
 				</view>
 				<view class=" has-radius has-mgtb-10">
 					<input type="password" v-model="login.password" placeholder="请输入登录密码" class="is-input1"  @input="BindInput" data-val="password"/>
@@ -33,7 +33,7 @@
 			return {
 				login: {
 					loading: false,
-					username:"",
+					phonenumber:"",
 					password:""
 				},
 
@@ -41,7 +41,7 @@
 		},
 		methods:{
 			defaultHandlerLogin(){
-				if(this.login.username === "" || this.login.password === "") {
+				if(this.login.phonenumber === "" || this.login.password === "") {
 					uni.showToast({
 						title: "手机号和密码不能为空",
 						icon: "none",
@@ -54,22 +54,22 @@
 				uniCloud.callFunction({ 
 						name: 'user-login',
 						data: {
-							username: this.login.username,
+							username: this.login.phonenumber,
 							password: this.login.password
 						}
 				}).then((res) => {
 					console.log(res)
-					if(res.result.code != 0) {
+					if(res.result.code === 10101) {
 						uni.showToast({
-							title: "手机号或密码错误",
+							title: "用户名不存在",
 							icon: "none",
 							mask: true
 						})
 						return false
 					}
-					if(res.result.code === 10101) {
+					if(res.result.code != 0) {
 						uni.showToast({
-							title: "用户名不存在",
+							title: "手机号或密码错误",
 							icon: "none",
 							mask: true
 						})

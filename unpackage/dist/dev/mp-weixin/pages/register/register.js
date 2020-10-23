@@ -169,6 +169,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -180,6 +183,7 @@ var _default =
 
       timerId: null,
       register: {
+        phonenumber: "",
         username: "",
         password: "",
         code: "" },
@@ -191,9 +195,9 @@ var _default =
   methods: {
     // 点击 获取验证码时的事件
     getsmscode: function getsmscode() {var _this = this;
-      if (this.register.username === "") {
+      if (this.register.username === "" || this.register.phonenumber === "") {
         uni.showToast({
-          title: "请输入手机号",
+          title: "请输入用户名和手机号",
           icon: "none",
           mask: true });
 
@@ -239,7 +243,7 @@ var _default =
 
         return false;
       }
-      if (this.register.password === "" || this.register.username === "") {
+      if (this.register.password === "" || this.register.username === "" || this.register.phonenumber === "") {
         uni.showToast({
           title: "用户名和密码不能为空",
           icon: "none",
@@ -252,6 +256,7 @@ var _default =
         name: 'add-user',
         data: {
           username: this.register.username,
+          phonenumber: this.register.phonenumber,
           password: this.register.password } }).
 
       then(function (res) {
@@ -290,7 +295,7 @@ var _default =
         url: '../login/login' });
 
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 115)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 17)["default"]))
 
 /***/ }),
 /* 17 */,

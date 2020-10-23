@@ -94,13 +94,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   hxNavbar: function() {
-    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 70))
+    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 79))
   },
   indexSwiper: function() {
-    return __webpack_require__.e(/*! import() | components/index-swiper/index-swiper */ "components/index-swiper/index-swiper").then(__webpack_require__.bind(null, /*! @/components/index-swiper/index-swiper.vue */ 77))
+    return __webpack_require__.e(/*! import() | components/index-swiper/index-swiper */ "components/index-swiper/index-swiper").then(__webpack_require__.bind(null, /*! @/components/index-swiper/index-swiper.vue */ 86))
   },
   indexPlaylist: function() {
-    return __webpack_require__.e(/*! import() | components/index-playlist/index-playlist */ "components/index-playlist/index-playlist").then(__webpack_require__.bind(null, /*! @/components/index-playlist/index-playlist.vue */ 84))
+    return __webpack_require__.e(/*! import() | components/index-playlist/index-playlist */ "components/index-playlist/index-playlist").then(__webpack_require__.bind(null, /*! @/components/index-playlist/index-playlist.vue */ 93))
   }
 }
 var render = function() {

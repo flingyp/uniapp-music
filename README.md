@@ -40,4 +40,17 @@
 8. 我的页面 退出登录清除本地用户信息及token缓存。 
 
 9. 我的页面点击头像 设置用户头像（1. 将头像上传到云存储中 2. 通过 uni-id 的设置头像 API，将图片的地址存储在云数据库中 进行中。。。）
+- 注意： 在使用 uni-id的API时是需要传入 token的， 在云函数的 event获取传入的token， token字段名自己来定义。 event里面默认有个字段 叫uniIdToken: "" 但是它始终都是为空的。 传入字段时 不要用uniIdToken字段名。
+- 因为官方的示例，我在这个坑待了一个多小时。官方默认的是 event.uniIdToken
 
+```js
+const uniID = require('uni-id')
+exports.main = async function(event,context) {
+    const payload = await uniID.checkToken(event.uniIdToken)
+    return payload
+}
+```
+
+10. 简单的实现了修改用户名称的功能
+
+11. 实现发现、发表动态静态页面

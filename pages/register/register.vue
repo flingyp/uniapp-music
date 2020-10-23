@@ -8,7 +8,10 @@
 		<view class="registercontent">
 			<view class="has-mglr-10 ">
 				<view class=" has-mgtb-10 ">
-					<input type="number" maxlength="11" placeholder="请输入手机号" class="is-input1 " data-val="username" @input="BindInput" />
+					<input type="text" maxlength="11" placeholder="请输入用户名" class="is-input1 " data-val="username" @input="BindInput" />
+				</view>
+				<view class=" has-mgtb-10 ">
+					<input type="number" maxlength="11" placeholder="请输入手机号" class="is-input1 " data-val="phonenumber" @input="BindInput" />
 				</view>
 				<view class=" has-mgtb-10 ">
 					<input type="number" maxlength="10" placeholder="短信验证码" class="is-input1 " data-val="code" @input="BindInput" />
@@ -43,6 +46,7 @@
 				},
 				timerId: null,
 				register: {
+					phonenumber: "",
 					username: "",
 					password: "",
 					code: ""
@@ -54,9 +58,9 @@
 		methods: {
 			// 点击 获取验证码时的事件
 			getsmscode() {
-				if(this.register.username === "") {
+				if(this.register.username === "" || this.register.phonenumber === "") {
 					uni.showToast({
-						title: "请输入手机号",
+						title: "请输入用户名和手机号",
 						icon: "none",
 						mask: true
 					})
@@ -102,7 +106,7 @@
 					})
 					return false
 				}
-				if(this.register.password === "" || this.register.username === "") {
+				if(this.register.password === "" || this.register.username === "" || this.register.phonenumber==="") {
 					uni.showToast({
 						title: "用户名和密码不能为空",
 						icon: "none",
@@ -115,6 +119,7 @@
 					name: 'add-user',
 					data: {
 						username: this.register.username,
+						phonenumber: this.register.phonenumber,
 						password: this.register.password
 					}
 				}).then((res) => {

@@ -5,7 +5,7 @@
 		<view class="my-author">
 			<view class="user-info">
 				<image :src="avatar==''?default_avatar:avatar" @tap="setAvatar"></image>
-				<view>{{user_name==""?default_name:user_name}}</view>
+				<view @tap="setName">{{user_name==""?default_name:user_name}}</view>
 			</view>
 		</view>
 
@@ -32,6 +32,12 @@
 		<view class="my-exit">
 			<button type="primary" @tap="exitLogin">退出登录</button>
 		</view>
+		
+		<view class="set-uername-input" v-if="isSetName">
+			<input placeholder="修改用户名" @input="bindInput" />
+			<button @tap="setUserName">修改</button>
+		</view>
+		
 	</view>
 </template>
 
@@ -44,15 +50,15 @@ export default {
 			default_avatar: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132",
 			default_name: "幻听",
 			avatar: "",
-			user_name: ""
+			user_name: "",
+			isSetName: false
 		};
 	},
 	onLoad() {
-		// 获取用户信息
-		const userInfo = uni.getStorageSync('userInfo')
-		console.log(userInfo)
-		this.user_name = userInfo.username
-		console.log(this.user_name)
+		this.getUserInfo()
+	},
+	onShow() {
+		this.getUserInfo()
 	},
 	methods: {
 		// 退出登录，返回登录页
@@ -82,29 +88,72 @@ export default {
 					if (res.tempFilePaths.length > 0) {
 						// 获取本地文件路径
 						let filePath = res.tempFilePaths[0]
+						const random_number = Math.round((Math.random()*10)+1)
 						const result = await uniCloud.uploadFile({
 							filePath: filePath,
-							cloudPath: `${this.user_name}.jpg`,
-							onUploadProgress: (progressEvent) => {
-								const percentCompleted = Math.round(((progressEvent.loaded * 100) / progressEvent.total))
-								if(percentCompleted === 100) {
-									// 上传完成
-									uni.showToast({
-										title: "上传完成",
-										icon: "success",
-										mask: true
-									})
-								}
-							}
+							cloudPath: `${random_number}${this.user_name}${random_number}.jpg`
 						})
 						// 上传云存储成功执行
 						if(result.success) {
 							this.avatar = result.fileID
 							// 将 云存储的图片地址 存储在云数据库中 调用云函数 upload_user_avatar
-							
+							uniCloud.callFunction({
+								name: 'upload_user_avatar',
+								data: {
+									token: uni.getStorageSync('token'),
+									avatar: this.avatar
+								}
+							}).then((res) => {
+								if(res.result.code === 0) {
+									uni.showToast({
+										title: "头像设置成功",
+										icon: "success",
+										mask: true
+									})
+								}
+							})
 						}
 					}
 				}
+			})
+		},
+		// 设置用户名
+		setName() {
+			this.isSetName = !this.isSetName
+		},
+		bindInput(e) {
+			this.user_name = e.detail.value
+		},
+		setUserName() {
+			uniCloud.callFunction({
+				name: 'update_userinfo',
+				data: {
+					token: uni.getStorageSync('token'),
+					name: this.user_name
+				}
+			}).then((res) => {
+				if(res.result.code === 0) {
+					uni.showToast({
+						title: "用户名修改成功",
+						icon: "success",
+						mask: true
+					})
+					this.isSetName = false
+				}
+			})
+		},
+		// 获取用户信息
+		getUserInfo() {
+			// 获取用户信息
+			const token = uni.getStorageSync('token')
+			uniCloud.callFunction({
+				name: 'get_userinfo',
+				data: {
+					token
+				}
+			}).then((res) => {
+				this.user_name = res.result.userInfo.name
+				this.avatar = res.result.userInfo.avatar
 			})
 		}
 	}
@@ -205,6 +254,31 @@ export default {
 		}
 	}
 	
+	.set-uername-input {
+		position: absolute;
+		width: 100%;
+		top: 20%;
+		left: 60%;
+		padding: 10px;
+		color: #FFF;
+		display: flex;
+		align-items: center;
+		input {
+			width: 100px;
+			height: 30px;
+			margin: 0;
+			padding: 0;
+			border: 1px solid #CCC;
+		}
+		
+		button {
+			width: 100rpx;
+			height: 60rpx;
+			margin: 0;
+			padding: 0;
+			line-height: 60rpx;
+		}
+	}
 	
 }
 </style>

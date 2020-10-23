@@ -15,7 +15,9 @@
 		},
 	    {
             "path" : "pages/tabBar/found/found",
-            "style" : {}
+            "style" : {
+				"navigationStyle":"custom"
+			}
         }
         ,{
             "path" : "pages/tabBar/my/my",
@@ -35,6 +37,10 @@
         }
         ,{
             "path" : "pages/login/login",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/blogfabu/blogfabu",
             "style" : {}
         }
     ],
