@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _my_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./my.vue?vue&type=script&lang=js& */ 41);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _my_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _my_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _my_vue_vue_type_style_index_0_id_22ae75d7_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./my.vue?vue&type=style&index=0&id=22ae75d7&lang=scss&scoped=true& */ 46);
-/* harmony import */ var _D_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 10);
+/* harmony import */ var _D_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 12);
 
 var renderjs
 
@@ -178,7 +178,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api/navabar-config.js */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api/navabar-config.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 {
   data: function data() {
     return {
@@ -191,10 +191,8 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
 
   },
   onLoad: function onLoad() {
-    this.getUserInfo();
-  },
-  onShow: function onShow() {
-    this.getUserInfo();
+    this.avatar = uni.getStorageSync('userInfo').avatar;
+    this.user_name = uni.getStorageSync('userInfo').name;
   },
   methods: {
     // 退出登录，返回登录页
@@ -206,10 +204,10 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
         showCancel: true,
         success: function success(res) {
           if (res.confirm) {
-            uni.redirectTo({ url: "../../login/login" });
             // 清除 用户信息 和 token
             uni.removeStorageSync('token');
             uni.removeStorageSync('userInfo');
+            uni.redirectTo({ url: "../../login/login" });
           } else if (res.cancel) {}
         } });
 
@@ -277,22 +275,8 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
           _this2.isSetName = false;
         }
       });
-    },
-    // 获取用户信息
-    getUserInfo: function getUserInfo() {var _this3 = this;
-      // 获取用户信息
-      var token = uni.getStorageSync('token');
-      uniCloud.callFunction({
-        name: 'get_userinfo',
-        data: {
-          token: token } }).
-
-      then(function (res) {
-        _this3.user_name = res.result.userInfo.name;
-        _this3.avatar = res.result.userInfo.avatar;
-      });
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 17)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 8)["default"]))
 
 /***/ }),
 

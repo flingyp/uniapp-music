@@ -24,6 +24,7 @@
 </template>
 
 <script>
+	import nowTime from '../../api/format_time.js'
 export default {
 	data() {
 		return {
@@ -38,7 +39,6 @@ export default {
 	},
 	onLoad() {
 		this.userInfo = this.getUserInfoToLocal()
-		console.log(this.userInfo)
 	},
 	methods: {
 		// 获取用户信息 和 token
@@ -64,7 +64,7 @@ export default {
 					for(let i=0; i<res.tempFilePaths.length; i++) {
 						let obj = {}
 						obj['imgLocalUrl'] = res.tempFilePaths[i] 
-						obj['imgName'] = res.tempFiles[i].name
+						obj['imgName'] = res.tempFiles[i].name != null ? res.tempFiles[i].name: `${Math.round((Math.random()*100))}-${this.userInfo.userInfo.name}-${Math.round((Math.random()*100))}.jpg`
 						this.imgLocalFile.push(obj)
 					}
 					if(this.imgLocalFile.length > 9) {
@@ -104,8 +104,7 @@ export default {
 				imgInfo.push(result)
 			}
 			let dynamic = {}
-			let fabuDate = new Date()
-			let fabu_date = `${fabuDate.getFullYear()}-${fabuDate.getMonth()+1}-${fabuDate.getDate()} ${fabuDate.getHours()}:${fabuDate.getMinutes()}`
+			let fabu_date = nowTime()
 			dynamic['imgInfo'] = imgInfo
 			dynamic['dynamic_content'] = this.inputShareContent
 			dynamic['name'] = this.userInfo.userInfo.name
@@ -119,7 +118,6 @@ export default {
 					dynamic
 				}
 			})
-			console.log(res)
 			if(res.result.code === 200) {
 				uni.showToast({
 					title: "动态发布成功",

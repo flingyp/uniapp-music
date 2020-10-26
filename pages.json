@@ -8,38 +8,33 @@
 				"enablePullDownRefresh": true,
 				"navigationStyle":"custom"
 			}
-		},
-		{
+		},{
 		    "path" : "pages/register/register",
 		    "style" : {}
-		},
-	    {
+		},{
             "path" : "pages/tabBar/found/found",
             "style" : {
 				"navigationStyle":"custom"
 			}
-        }
-        ,{
+        },{
             "path" : "pages/tabBar/my/my",
             "style" : {
 				"navigationStyle":"custom"
 			}
-        }
-        ,{
+        },{
             "path" : "pages/playlist_detail/playlist_detail",
             "style" : {
 				"navigationStyle":"custom"
 			}
-        }
-        ,{
+        },{
             "path" : "pages/player/player",
             "style" : {}
-        }
-        ,{
+        },{
             "path" : "pages/login/login",
-            "style" : {}
-        }
-        ,{
+            "style" : {
+				"navigationStyle":"custom"
+			}
+        },{
             "path" : "pages/blogfabu/blogfabu",
             "style" : {}
         }

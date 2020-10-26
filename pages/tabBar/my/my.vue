@@ -55,10 +55,8 @@ export default {
 		};
 	},
 	onLoad() {
-		this.getUserInfo()
-	},
-	onShow() {
-		this.getUserInfo()
+		this.avatar = uni.getStorageSync('userInfo').avatar
+		this.user_name = uni.getStorageSync('userInfo').name
 	},
 	methods: {
 		// 退出登录，返回登录页
@@ -70,10 +68,10 @@ export default {
 				showCancel: true,
 				success: (res) => {
 					if (res.confirm) {
-						uni.redirectTo({ url:"../../login/login" })
 						// 清除 用户信息 和 token
 						uni.removeStorageSync('token')
 						uni.removeStorageSync('userInfo')
+						uni.redirectTo({ url:"../../login/login" })
 					} else if (res.cancel) {}
 				}
 			})
@@ -140,20 +138,6 @@ export default {
 					})
 					this.isSetName = false
 				}
-			})
-		},
-		// 获取用户信息
-		getUserInfo() {
-			// 获取用户信息
-			const token = uni.getStorageSync('token')
-			uniCloud.callFunction({
-				name: 'get_userinfo',
-				data: {
-					token
-				}
-			}).then((res) => {
-				this.user_name = res.result.userInfo.name
-				this.avatar = res.result.userInfo.avatar
 			})
 		}
 	}

@@ -28,7 +28,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _found_vue_vue_type_template_id_bfb8dec6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./found.vue?vue&type=template&id=bfb8dec6&scoped=true& */ 33);
 /* harmony import */ var _found_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./found.vue?vue&type=script&lang=js& */ 35);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _found_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _found_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _D_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 10);
+/* harmony import */ var _D_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 12);
 
 var renderjs
 
@@ -138,7 +138,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -151,7 +151,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api/navabar-config.js */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api/navabar-config.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -163,8 +163,27 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
 //
 //
 //
-var _default = { data: function data() {return { config: _navabarConfig.default };}, methods: { fabu: function fabu() {uni.navigateTo({ url: '/pages/blogfabu/blogfabu' });} } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+var _default = { data: function data() {return { config: _navabarConfig.default, // 动态内容
+      dynamicConent: [] };}, onLoad: function onLoad() {this.getDynamicContent();}, onShow: function onShow() {this.dynamicConent = [];
+    this.getDynamicContent();
+  },
+  methods: {
+    fabu: function fabu() {
+      uni.navigateTo({
+        url: '/pages/blogfabu/blogfabu' });
+
+    },
+    // 获取动态内容
+    getDynamicContent: function getDynamicContent() {var _this = this;
+      uniCloud.callFunction({
+        name: 'get_dynamic_content' }).
+      then(function (res) {
+        if (res.success) {
+          _this.dynamicConent = res.result.data;
+        }
+      });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 8)["default"]))
 
 /***/ })
 

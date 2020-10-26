@@ -57,3 +57,5 @@ exports.main = async function(event,context) {
 
 12. 实现发布动态功能到云数据库和云存储中
 
+13. 本地token不存在、过期的逻辑处理、动态内容的渲染
+

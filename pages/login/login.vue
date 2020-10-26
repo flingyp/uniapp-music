@@ -1,5 +1,7 @@
 <template>
 	<view class="s-page-wrapper">
+		<hx-navbar :config="config"></hx-navbar>
+		
 		<view class="is-25vh is-flex is-align-center is-justify-center">
 			<view class="is-flex is-column is-justify-center  is-align-center is-height-100">
 				<image src="../../static/imgs/blog-actived.png" mode="aspectFit" class="logoimg"></image>
@@ -31,6 +33,7 @@
 </template>
 
 <script>
+	import con from '../../api/navabar-config.js'
 	export default {
 		data() {
 			return {
@@ -39,7 +42,7 @@
 					phonenumber:"",
 					password:""
 				},
-
+				config: con
 			};
 		},
 		methods:{
@@ -61,7 +64,6 @@
 							password: this.login.password
 						}
 				}).then((res) => {
-					console.log(res)
 					if(res.result.code === 10101) {
 						uni.showToast({
 							title: "用户名不存在",

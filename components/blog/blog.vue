@@ -3,28 +3,19 @@
 		<!-- 用户动态头像 信息等 -->
 		<view class="blog-useringfo">
 			<view class="user-img">
-				<image src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132"></image>
+				<image :src="dynamic.avatar"></image>
 			</view>
 			<view class="user-name-time">
-				<view class="user-name">幻听</view>
-				<view class="create-time">2020-10-23</view>
+				<view class="user-name">{{dynamic.name}}</view>
+				<view class="create-time">{{dynamic.fabu_date}}</view>
 			</view>
 		</view>
 		<!-- 用户动态内容 -->
 		<view class="blog-content">
-			<view class="content-font">今天是2020年10月23日星期五</view>
+			<view class="content-font">{{dynamic.dynamic_content}}</view>
 			<view class="content-image">
-				<view class="image-item">
-					<image src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132"></image>
-				</view>
-				<view class="image-item">
-					<image src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132"></image>
-				</view>
-				<view class="image-item">
-					<image src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132"></image>
-				</view>
-				<view class="image-item">
-					<image src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132"></image>
+				<view class="image-item" v-for="(item, index) in dynamic.imgInfo"  :key="index">
+					<image :src="item.fileID"></image>
 				</view>
 			</view>
 		</view>
@@ -41,6 +32,11 @@ export default {
 	data() {
 		return {};
 	},
+	props: {
+		dynamic: {
+			type: Object
+		}
+	},
 	methods: {
 	}
 };
@@ -49,7 +45,7 @@ export default {
 <style lang="scss" scoped>
 .blog-box {
 	width: 100%;
-	border: 1px solid #ccc;
+	border: 0.5px solid #ccc;
 	margin: 10px auto;
 	display: flex;
 	flex-direction: column;
@@ -122,7 +118,7 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-top: 1px solid #CCC;
+		border-top: 0.5px solid #CCC;
 		padding: 6px 0;
 	}
 }
