@@ -54,3 +54,6 @@ exports.main = async function(event,context) {
 10. 简单的实现了修改用户名称的功能
 
 11. 实现发现、发表动态静态页面
+
+12. 实现发布动态功能到云数据库和云存储中
+

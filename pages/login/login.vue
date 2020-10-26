@@ -20,6 +20,9 @@
 			</view>
 		</view>
 		<view class="is-20vh has-mgt-80 content">
+			<navigator url="../register/register" class=" has-radius is-right is-grey has-mgr-20" hover-class="">
+				<text>暂未注册？</text><text class="is-blue">点击注册</text>
+			</navigator>
 			<navigator url="#" class=" has-radius is-right is-grey has-mgr-20" hover-class="">
 				<text>忘记密码？</text><text class="is-blue">点击找回</text>
 			</navigator>

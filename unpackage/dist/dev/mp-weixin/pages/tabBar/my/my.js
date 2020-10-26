@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   hxNavbar: function() {
-    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 79))
+    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 81))
   }
 }
 var render = function() {
@@ -183,8 +183,8 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
   data: function data() {
     return {
       config: _navabarConfig.default,
-      default_avatar: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132",
-      default_name: "幻听",
+      default_avatar: "https://img.zcool.cn/community/01cfd95d145660a8012051cdb52093.png@1280w_1l_2o_100sh.png",
+      default_name: "小明",
       avatar: "",
       user_name: "",
       isSetName: false };

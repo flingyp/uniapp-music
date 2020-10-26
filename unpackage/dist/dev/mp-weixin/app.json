@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/register/register",
     "pages/tabBar/index/index",
+    "pages/register/register",
     "pages/tabBar/found/found",
     "pages/tabBar/my/my",
     "pages/playlist_detail/playlist_detail",

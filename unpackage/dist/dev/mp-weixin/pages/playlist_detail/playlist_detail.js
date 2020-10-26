@@ -94,10 +94,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   hxNavbar: function() {
-    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 79))
+    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 81))
   },
   playlistMusiclist: function() {
-    return __webpack_require__.e(/*! import() | components/playlist-musiclist/playlist-musiclist */ "components/playlist-musiclist/playlist-musiclist").then(__webpack_require__.bind(null, /*! @/components/playlist-musiclist/playlist-musiclist.vue */ 114))
+    return __webpack_require__.e(/*! import() | components/playlist-musiclist/playlist-musiclist */ "components/playlist-musiclist/playlist-musiclist").then(__webpack_require__.bind(null, /*! @/components/playlist-musiclist/playlist-musiclist.vue */ 116))
   }
 }
 var render = function() {

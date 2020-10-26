@@ -74,10 +74,10 @@
   margin-top: 20rpx;
 }
 .image-wrap.data-v-74fd36f4 {
+  box-sizing: border-box;
   width: 220rpx;
   height: 220rpx;
-  margin-right: 10rpx;
-  margin-bottom: 10rpx;
+  margin: 8rpx;
   position: relative;
   overflow: hidden;
   text-align: center;

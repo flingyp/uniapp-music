@@ -47,8 +47,8 @@ export default {
 	data() {
 		return {
 			config: con,
-			default_avatar: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLBxlibEt5F6HTUVuW5sSa1OHcKS7YjWQUXWRJLlXgop63GCryHEL4CnxL8rQNd5zqiayLyHw4lPmhA/132",
-			default_name: "幻听",
+			default_avatar: "https://img.zcool.cn/community/01cfd95d145660a8012051cdb52093.png@1280w_1l_2o_100sh.png",
+			default_name: "小明",
 			avatar: "",
 			user_name: "",
 			isSetName: false

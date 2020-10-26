@@ -33,6 +33,11 @@
 			}
 		},
 		onLoad() {
+			// 判断用户是否登录
+			const token = uni.getStorageSync('token')
+			if(!token) {
+				uni.redirectTo({ url: '../../login/login' })
+			}
 			this.original()
 		},
 		// 上拉加载
