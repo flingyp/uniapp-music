@@ -1696,33 +1696,6 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 145:
-/*!***************************************************!*\
-  !*** F:/yepeng-demo/uni-music/api/format_time.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = function _default() {
-  var now_time = new Date();
-  // 年
-  var now_year = now_time.getFullYear();
-  // 月  注： 月份要 + 1
-  var now_month = now_time.getMonth() + 1 < 9 ? "0" + (now_time.getMonth() + 1).toString() : (now_time.getMonth() + 1).toString();
-  // 日
-  var now_day = now_time.getDate() < 9 ? "0" + now_time.getDate().toString() : now_time.getDate().toString();
-  // 时
-  var now_hour = now_time.getHours() < 9 ? "0" + now_time.getHours().toString() : now_time.getHours().toString();
-  // 秒
-  var now_minutes = now_time.getMinutes() < 9 ? "0" + now_time.getMinutes().toString() : now_time.getMinutes().toString();
-
-  var nowTime = "".concat(now_year, "-").concat(now_month, "-").concat(now_day, " ").concat(now_hour, ": ").concat(now_minutes);
-  return nowTime;
-};exports.default = _default;
-
-/***/ }),
-
 /***/ 19:
 /*!***********************************************!*\
   !*** F:/yepeng-demo/uni-music/api/request.js ***!
@@ -8639,6 +8612,33 @@ if (hadRuntime) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 new _vue.default();exports.default = _default;
+
+/***/ }),
+
+/***/ 79:
+/*!***************************************************!*\
+  !*** F:/yepeng-demo/uni-music/api/format_time.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = function _default() {
+  var now_time = new Date();
+  // 年
+  var now_year = now_time.getFullYear();
+  // 月  注： 月份要 + 1
+  var now_month = now_time.getMonth() + 1 < 9 ? "0" + (now_time.getMonth() + 1).toString() : (now_time.getMonth() + 1).toString();
+  // 日
+  var now_day = now_time.getDate() < 9 ? "0" + now_time.getDate().toString() : now_time.getDate().toString();
+  // 时
+  var now_hour = now_time.getHours() < 9 ? "0" + now_time.getHours().toString() : now_time.getHours().toString();
+  // 秒
+  var now_minutes = now_time.getMinutes() < 9 ? "0" + now_time.getMinutes().toString() : now_time.getMinutes().toString();
+
+  var nowTime = "".concat(now_year, "-").concat(now_month, "-").concat(now_day, " ").concat(now_hour, ": ").concat(now_minutes);
+  return nowTime;
+};exports.default = _default;
 
 /***/ }),
 

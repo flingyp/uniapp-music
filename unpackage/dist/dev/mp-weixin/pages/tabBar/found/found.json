@@ -1,5 +1,6 @@
 {
   "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "hx-navbar": "/components/hx-navbar/hx-navbar",
     "found-search": "/components/found-search/found-search",

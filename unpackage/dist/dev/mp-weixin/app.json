@@ -42,6 +42,5 @@
   },
   "usingComponents": {
     "hx-navbar": "/components/hx-navbar/hx-navbar"
-  },
-  "sitemapLocation": "sitemap7.json"
+  }
 }

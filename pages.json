@@ -14,7 +14,8 @@
 		},{
             "path" : "pages/tabBar/found/found",
             "style" : {
-				"navigationStyle":"custom"
+				"navigationStyle":"custom",
+				"enablePullDownRefresh": true
 			}
         },{
             "path" : "pages/tabBar/my/my",

@@ -92,13 +92,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   hxNavbar: function() {
-    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 81))
+    return __webpack_require__.e(/*! import() | components/hx-navbar/hx-navbar */ "components/hx-navbar/hx-navbar").then(__webpack_require__.bind(null, /*! @/components/hx-navbar/hx-navbar.nvue */ 82))
   },
   foundSearch: function() {
-    return __webpack_require__.e(/*! import() | components/found-search/found-search */ "components/found-search/found-search").then(__webpack_require__.bind(null, /*! @/components/found-search/found-search.vue */ 102))
+    return __webpack_require__.e(/*! import() | components/found-search/found-search */ "components/found-search/found-search").then(__webpack_require__.bind(null, /*! @/components/found-search/found-search.vue */ 103))
   },
   blog: function() {
-    return __webpack_require__.e(/*! import() | components/blog/blog */ "components/blog/blog").then(__webpack_require__.bind(null, /*! @/components/blog/blog.vue */ 109))
+    return __webpack_require__.e(/*! import() | components/blog/blog */ "components/blog/blog").then(__webpack_require__.bind(null, /*! @/components/blog/blog.vue */ 110))
   }
 }
 var render = function() {
@@ -151,21 +151,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api/navabar-config.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { config: _navabarConfig.default, // 动态内容
-      dynamicConent: [] };}, onLoad: function onLoad() {this.getDynamicContent();}, onShow: function onShow() {this.dynamicConent = [];
-    this.getDynamicContent();
+var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api/navabar-config.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var _default =
+{
+  data: function data() {
+    return {
+      config: _navabarConfig.default,
+      // 动态内容
+      dynamicConent: [],
+      limit: 5,
+      startPosition: 0,
+      addLimit: 3 };
+
+  },
+  onLoad: function onLoad() {
+    this.getDynamicContent(this.limit, this.startPosition);
+  },
+  // 上拉加载
+  onReachBottom: function onReachBottom() {
+    this.reachBottom();
+  },
+  // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    this.fromUpRefresh();
   },
   methods: {
     fabu: function fabu() {
@@ -174,14 +181,43 @@ var _default = { data: function data() {return { config: _navabarConfig.default,
 
     },
     // 获取动态内容
-    getDynamicContent: function getDynamicContent() {var _this = this;
+    getDynamicContent: function getDynamicContent(limit, startPosition) {var _this = this;var keyword = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
       uniCloud.callFunction({
-        name: 'get_dynamic_content' }).
+        name: 'get_dynamic_content',
+        data: {
+          limit: limit,
+          startPosition: startPosition,
+          keyword: keyword } }).
+
       then(function (res) {
         if (res.success) {
-          _this.dynamicConent = res.result.data;
+          console.log(res);
+          if (res.result.affectedDocs === 0) {
+            uni.showToast({
+              title: "没有更多动态了",
+              icon: "none" });
+
+          }
+          _this.dynamicConent = [].concat(_toConsumableArray(_this.dynamicConent), _toConsumableArray(res.result.data));
         }
       });
+    },
+    // 上拉加载事件
+    reachBottom: function reachBottom() {
+      this.getDynamicContent(this.addLimit, this.dynamicConent.length + 1);
+    },
+    // 下拉刷新
+    fromUpRefresh: function fromUpRefresh() {
+      this.dynamicConent = [];
+      this.getDynamicContent(this.limit, 0);
+      setTimeout(function () {
+        uni.stopPullDownRefresh();
+      }, 1000);
+    },
+    // 搜索相关动态
+    searchDynamic: function searchDynamic(keyword) {
+      this.dynamicConent = [];
+      this.getDynamicContent(null, this.startPosition, keyword);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 8)["default"]))
 

@@ -4,8 +4,8 @@
 		  <i class="iconfont icon-fabu fabu" @tap="dumpfabu"></i>
 	  </view>
 	  <i class="iconfont icon-sousuo find"></i>
-	  <input class="bar" placeholder="请输入关键字" placeholder-class="in-bar"></input>
-	  <button class="search">搜索</button>
+	  <input class="bar" placeholder="请输入关键字" placeholder-class="in-bar" @input="get_search_content"></input>
+	  <button class="search" @tap="go_search">搜索</button>
 	</view>
 </template>
 
@@ -13,12 +13,26 @@
 	export default {
 		data() {
 			return {
-				
+				search_content: ""
 			};
 		},
 		methods: {
 			dumpfabu() {
 				this.$emit('gofabu')
+			},
+			get_search_content(e) {
+				this.search_content = e.detail.value
+			}, 
+			go_search() {
+				if(this.search_content === "" || this.search_content.trim() === "") {
+					uni.showToast({
+						title: "请输入想要搜索的内容",
+						icon: "none"
+					})
+					return false
+				} else {
+					this.$emit('goSearch', this.search_content)
+				}
 			}
 		}
 	}

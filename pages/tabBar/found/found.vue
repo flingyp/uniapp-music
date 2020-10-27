@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<hx-navbar :config="config"></hx-navbar>
-		<found-search @gofabu="fabu"></found-search>
+		<found-search @gofabu="fabu" @goSearch="searchDynamic"></found-search>
 		<view class="blog-list">
 			<block v-for="(item, index) in dynamicConent" :key="index">
 				<blog :dynamic="item"></blog>
@@ -17,15 +17,22 @@
 			return {
 				config: con,
 				// 动态内容
-				dynamicConent: []
+				dynamicConent: [],
+				limit: 5,
+				startPosition: 0,
+				addLimit: 3
 			};
 		},
 		onLoad(){
-			this.getDynamicContent()
+			this.getDynamicContent(this.limit, this.startPosition)
 		},
-		onShow() {
-			this.dynamicConent = []
-			this.getDynamicContent()
+		// 上拉加载
+		onReachBottom() {
+			this.reachBottom()
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+			this.fromUpRefresh()
 		},
 		methods: {
 			fabu() {
@@ -34,14 +41,43 @@
 				})
 			},
 			// 获取动态内容
-			getDynamicContent() {
+			getDynamicContent(limit, startPosition, keyword="") {
 				uniCloud.callFunction({
-					name: 'get_dynamic_content'
+					name: 'get_dynamic_content',
+					data: {
+						limit,
+						startPosition,
+						keyword
+					}
 				}).then((res) => {
 					if(res.success) {
-						this.dynamicConent = res.result.data
+						console.log(res)
+						if(res.result.affectedDocs === 0) {
+							uni.showToast({ 
+								title: "没有更多动态了",
+								icon: "none"
+							})
+						}
+						this.dynamicConent = [...this.dynamicConent, ...res.result.data]
 					}
 				})
+			},
+			// 上拉加载事件
+			reachBottom() {
+				this.getDynamicContent(this.addLimit, this.dynamicConent.length+1)
+			},
+			// 下拉刷新
+			fromUpRefresh() {
+				this.dynamicConent = []
+				this.getDynamicContent(this.limit, 0)
+				setTimeout(() => {
+					uni.stopPullDownRefresh()
+				}, 1000)
+			},
+			// 搜索相关动态
+			searchDynamic(keyword) {
+				this.dynamicConent = []
+				this.getDynamicContent(null ,this.startPosition, keyword)
 			}
 		}
 	}
