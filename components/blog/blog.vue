@@ -9,6 +9,9 @@
 				<view class="user-name">{{dynamic.name}}</view>
 				<view class="create-time">{{dynamic.fabu_date}}</view>
 			</view>
+			<view class="blog-delete" v-if="isBlogDelete" @tap="deleteThisBlog">
+				<i class="iconfont icon-shanchu"></i>
+			</view>
 		</view>
 		<!-- 用户动态内容 -->
 		<view class="blog-content">
@@ -18,11 +21,6 @@
 					<image :src="item.fileID"></image>
 				</view>
 			</view>
-		</view>
-		<!-- 评论 分享 -->
-		<view class="blog-pinlun">
-			<i class="iconfont icon-pinglun icon" />
-			<text>评论</text>
 		</view>
 	</view>
 </template>
@@ -38,6 +36,19 @@ export default {
 		}
 	},
 	methods: {
+		deleteThisBlog() {
+			this.$emit('deleteBlog', this.dynamic._id)
+		}
+	},
+	computed:{
+		isBlogDelete() {
+			const user_id = uni.getStorageSync('userInfo')._id
+			if(this.dynamic.id === user_id) {
+				return true
+			} else {
+				return false
+			}
+		}
 	}
 };
 </script>
@@ -56,6 +67,7 @@ export default {
 		display: flex;
 		box-sizing: border-box;
 		padding: 10px 8px;
+		position: relative;
 		.user-img {
 			width: 70rpx;
 			height: 70rpx;
@@ -75,8 +87,16 @@ export default {
 				font-size: 14px;
 			}
 		}
+		
+		.blog-delete {
+			position: absolute;
+			right: 5%;
+			.icon-shanchu {
+				font-size: 66rpx;
+			}
+		}
 	}
-
+	
 	.blog-content {
 		flex: 1;
 		padding: 5px 10px;

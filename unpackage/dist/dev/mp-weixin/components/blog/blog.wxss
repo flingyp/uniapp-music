@@ -45,6 +45,7 @@
   display: flex;
   box-sizing: border-box;
   padding: 10px 8px;
+  position: relative;
 }
 .blog-box .blog-useringfo .user-img.data-v-49f24878 {
   width: 70rpx;
@@ -62,6 +63,13 @@
 }
 .blog-box .blog-useringfo .user-name-time .create-time.data-v-49f24878 {
   font-size: 14px;
+}
+.blog-box .blog-useringfo .blog-delete.data-v-49f24878 {
+  position: absolute;
+  right: 5%;
+}
+.blog-box .blog-useringfo .blog-delete .icon-shanchu.data-v-49f24878 {
+  font-size: 66rpx;
 }
 .blog-box .blog-content.data-v-49f24878 {
   -webkit-box-flex: 1;

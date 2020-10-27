@@ -4,7 +4,7 @@
 		<found-search @gofabu="fabu" @goSearch="searchDynamic"></found-search>
 		<view class="blog-list">
 			<block v-for="(item, index) in dynamicConent" :key="index">
-				<blog :dynamic="item"></blog>
+				<blog :dynamic="item" @deleteBlog="delete_blog"></blog>
 			</block>
 		</view>
 	</view>
@@ -28,11 +28,31 @@
 		},
 		// 上拉加载
 		onReachBottom() {
+			uni.showToast({
+				title: "刷新中",
+				icon: "loading",
+				mask: true,
+			})
 			this.reachBottom()
+			setTimeout(() => {
+				uni.hideToast()
+			}, 100)
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
-			this.fromUpRefresh()
+			uni.showToast({
+				title: "刷新中",
+				icon: "loading",
+				mask: true,
+				success: () => {
+					this.dynamicConent = []
+				}
+			})
+			setTimeout(() => {
+				this.fromUpRefresh()
+				uni.hideToast()
+				uni.stopPullDownRefresh()
+			}, 100)
 		},
 		methods: {
 			fabu() {
@@ -51,7 +71,6 @@
 					}
 				}).then((res) => {
 					if(res.success) {
-						console.log(res)
 						if(res.result.affectedDocs === 0) {
 							uni.showToast({ 
 								title: "没有更多动态了",
@@ -78,6 +97,33 @@
 			searchDynamic(keyword) {
 				this.dynamicConent = []
 				this.getDynamicContent(null ,this.startPosition, keyword)
+			},
+			// 删除一篇动态
+			delete_blog(_id) {
+				// 显示模态框
+				uni.showModal({
+					title: "警告",
+					content: "是否删除该动态",
+					success: (res) => {
+						if(res.confirm) { // 点击确定
+							uniCloud.callFunction({
+								name: 'delete_dynamic_by_id',
+								data: {
+									dynamic_id: _id
+								}
+							}).then(res => {
+								if(res.result.deleted === 1) {
+									uni.showToast({
+										title: "成功删除该动态",
+										icon: "success"
+									})
+									this.dynamicConent = []
+									this.getDynamicContent(this.limit, this.startPosition)
+								}
+							})
+						} 
+					}
+				})
 			}
 		}
 	}

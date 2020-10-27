@@ -168,11 +168,31 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
   },
   // 上拉加载
   onReachBottom: function onReachBottom() {
+    uni.showToast({
+      title: "刷新中",
+      icon: "loading",
+      mask: true });
+
     this.reachBottom();
+    setTimeout(function () {
+      uni.hideToast();
+    }, 100);
   },
   // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {
-    this.fromUpRefresh();
+  onPullDownRefresh: function onPullDownRefresh() {var _this = this;
+    uni.showToast({
+      title: "刷新中",
+      icon: "loading",
+      mask: true,
+      success: function success() {
+        _this.dynamicConent = [];
+      } });
+
+    setTimeout(function () {
+      _this.fromUpRefresh();
+      uni.hideToast();
+      uni.stopPullDownRefresh();
+    }, 100);
   },
   methods: {
     fabu: function fabu() {
@@ -181,7 +201,7 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
 
     },
     // 获取动态内容
-    getDynamicContent: function getDynamicContent(limit, startPosition) {var _this = this;var keyword = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+    getDynamicContent: function getDynamicContent(limit, startPosition) {var _this2 = this;var keyword = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
       uniCloud.callFunction({
         name: 'get_dynamic_content',
         data: {
@@ -191,14 +211,13 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
 
       then(function (res) {
         if (res.success) {
-          console.log(res);
           if (res.result.affectedDocs === 0) {
             uni.showToast({
               title: "没有更多动态了",
               icon: "none" });
 
           }
-          _this.dynamicConent = [].concat(_toConsumableArray(_this.dynamicConent), _toConsumableArray(res.result.data));
+          _this2.dynamicConent = [].concat(_toConsumableArray(_this2.dynamicConent), _toConsumableArray(res.result.data));
         }
       });
     },
@@ -218,6 +237,33 @@ var _navabarConfig = _interopRequireDefault(__webpack_require__(/*! ../../../api
     searchDynamic: function searchDynamic(keyword) {
       this.dynamicConent = [];
       this.getDynamicContent(null, this.startPosition, keyword);
+    },
+    // 删除一篇动态
+    delete_blog: function delete_blog(_id) {var _this3 = this;
+      // 显示模态框
+      uni.showModal({
+        title: "警告",
+        content: "是否删除该动态",
+        success: function success(res) {
+          if (res.confirm) {// 点击确定
+            uniCloud.callFunction({
+              name: 'delete_dynamic_by_id',
+              data: {
+                dynamic_id: _id } }).
+
+            then(function (res) {
+              if (res.result.deleted === 1) {
+                uni.showToast({
+                  title: "成功删除该动态",
+                  icon: "success" });
+
+                _this3.dynamicConent = [];
+                _this3.getDynamicContent(_this3.limit, _this3.startPosition);
+              }
+            });
+          }
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 8)["default"]))
 
