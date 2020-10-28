@@ -1,1 +1,1 @@
-<view class="playlist-container data-v-8d6fc0b8"><image class="playlist-img data-v-8d6fc0b8" src="{{playlist.picUrl}}"></image><text class="playlist-playcount data-v-8d6fc0b8">{{playlist.playCount}}</text><view class="playlist-name data-v-8d6fc0b8">{{playlist.name}}</view></view>
+<view class="playlist-container data-v-8d6fc0b8"><image class="playlist-img data-v-8d6fc0b8" src="{{playlist.picUrl}}"></image><text class="playlist-playcount data-v-8d6fc0b8">{{play_conunt_format}}</text><view class="playlist-name data-v-8d6fc0b8">{{playlist.name}}</view></view>

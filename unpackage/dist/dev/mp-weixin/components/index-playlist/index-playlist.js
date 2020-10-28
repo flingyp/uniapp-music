@@ -23,13 +23,34 @@ var _default =
       type: Object } },
 
 
-  created: function created() {
-  },
   data: function data() {
-    return {};
+    return {
+      play_conunt_format: '' };
 
-
-  } };exports.default = _default;
+  },
+  created: function created() {
+    this.play_conunt_format = this.tranNumber(this.playlist.playCount, 2);
+  },
+  methods: {
+    // 对 播放数量 的处理
+    tranNumber: function tranNumber(num, point) {
+      // num 播放数量， point 小数点后保留几位
+      // 有小数点先删除小数点
+      var numStr = num.toString().split('.')[0];
+      if (numStr.length < 6) {
+        // 说明播放数量在十万内
+        return numStr;
+      } else if (numStr.length >= 6 && numStr.length <= 8) {
+        // 说明播放数量 超过十万外 千万内
+        // decimal 小数点部分
+        var decimal = numStr.substring(numStr.length - 4, numStr.length - 4 + point);
+        return parseFloat(parseInt(num / 10000) + '.' + decimal) + '万';
+      } else if (numStr.length > 8) {
+        // 表示播放量在 亿 以外
+        var _decimal = numStr.substring(numStr.length - 8, numStr.length - 8 + point);
+        return parseFloat(parseInt(num / 100000000) + '.' + _decimal) + '亿';
+      }
+    } } };exports.default = _default;
 
 /***/ }),
 
