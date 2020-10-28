@@ -68,9 +68,10 @@ export default {
 				showCancel: true,
 				success: (res) => {
 					if (res.confirm) {
-						// 清除 用户信息 和 token
+						// 清除 用户信息 和 token 和用户最近播放歌曲
 						uni.removeStorageSync('token')
 						uni.removeStorageSync('userInfo')
+						uni.removeStorageSync('recently_songs')
 						uni.redirectTo({ url:"../../login/login" })
 					} else if (res.cancel) {}
 				}

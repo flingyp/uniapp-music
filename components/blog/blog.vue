@@ -17,7 +17,12 @@
 		<view class="blog-content">
 			<view class="content-font">{{dynamic.dynamic_content}}</view>
 			<view class="content-image">
-				<view class="image-item" v-for="(item, index) in dynamic.imgInfo"  :key="index">
+				<view 
+					class="image-item" 
+					v-for="(item, index) in dynamic.imgInfo"  
+					:key="index"
+					@tap="previewImages(index, dynamic.imgInfo)"
+				>
 					<image :src="item.fileID"></image>
 				</view>
 			</view>
@@ -38,6 +43,19 @@ export default {
 	methods: {
 		deleteThisBlog() {
 			this.$emit('deleteBlog', this.dynamic._id)
+		},
+		// 预览图片
+		previewImages(currentIndex, imgsInfo) {
+			const imgsUrl = []
+			imgsInfo.forEach((item) => {
+				imgsUrl.push(item.fileID)
+			})
+			uni.previewImage({
+				current: currentIndex,
+				urls: imgsUrl,
+				indicator: true,
+				loop: true
+			})
 		}
 	},
 	computed:{

@@ -139,11 +139,13 @@ var _default =
 
 
   data: function data() {
-    return {};
+    return {
+      currentPlaySongIndex: null };
 
   },
   methods: {
     jumpPlayer: function jumpPlayer(info, index) {
+      this.currentPlaySongIndex = index;
       this.$emit("goPlayer", info, index);
     } } };exports.default = _default;
 

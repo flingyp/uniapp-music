@@ -59,5 +59,4 @@ exports.main = async function(event,context) {
 
 13. 本地token不存在、过期的逻辑处理、动态内容的渲染
 
-14. found页面上拉加载、下拉刷新动态。模糊查询动态功能实现
-
+14. found页面上拉加载、下拉刷新动态。模糊查询动态功能实现、删除自己的动态功能

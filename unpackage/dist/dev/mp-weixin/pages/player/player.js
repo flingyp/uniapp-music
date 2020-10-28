@@ -214,6 +214,9 @@ var _default = { data: function data() {return { // 歌曲信息
   methods: {
     // 播放歌曲函数
     playSong: function playSong(id) {var _this2 = this;
+      // 存储歌曲信息至本地存储 recently_songs
+      this.setRencentlyPlaySongs(this.songInfo);
+
       // 歌曲开始播放
       uni.showToast({
         title: "加载中",
@@ -250,6 +253,30 @@ var _default = { data: function data() {return { // 歌曲信息
       // 获取歌曲下标值 到 歌单列表页面
       // 通过 兄弟组件方式的传值来向 player组件传递数据
       _eventBus.default.$emit('getPrevSongInfo', this.songIndex);
+    },
+
+    // 设置最近播放歌曲
+    setRencentlyPlaySongs: function setRencentlyPlaySongs(songInfo) {
+      var data = uni.getStorageSync('recently_songs');
+      if (!data) {// 本地存储中没有最近播放这个 key时 recently_songs 
+        var recentlySongs = [];
+        recentlySongs.push(songInfo);
+        uni.setStorageSync('recently_songs', { recentlySongs: recentlySongs });
+      } else {// 本地存储已经存在一些最近播放的歌曲
+        var _recentlySongs = data.recentlySongs;
+        var isSomeTrue = false;
+        isSomeTrue = _recentlySongs.every(function (item) {
+          return item.id != songInfo.id;
+        });
+        if (isSomeTrue) {
+          // 本地存储只存放 10 条最近播放歌曲，如果本地存储歌曲已经存放了10条最近播放歌曲 则删除 第一个 后 向末尾添加一个
+          if (_recentlySongs.length >= 10) {
+            _recentlySongs.splice(0, 1);
+          }
+          _recentlySongs.push(songInfo);
+          uni.setStorageSync('recently_songs', { recentlySongs: _recentlySongs });
+        }
+      }
     } },
 
   watch: {

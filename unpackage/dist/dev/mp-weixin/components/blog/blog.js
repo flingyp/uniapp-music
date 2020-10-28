@@ -141,6 +141,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -154,6 +159,19 @@ var _default =
   methods: {
     deleteThisBlog: function deleteThisBlog() {
       this.$emit('deleteBlog', this.dynamic._id);
+    },
+    // 预览图片
+    previewImages: function previewImages(currentIndex, imgsInfo) {
+      var imgsUrl = [];
+      imgsInfo.forEach(function (item) {
+        imgsUrl.push(item.fileID);
+      });
+      uni.previewImage({
+        current: currentIndex,
+        urls: imgsUrl,
+        indicator: true,
+        loop: true });
+
     } },
 
   computed: {

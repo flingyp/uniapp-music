@@ -78,6 +78,9 @@
 		methods: {
 			// 播放歌曲函数
 			playSong(id) {
+				// 存储歌曲信息至本地存储 recently_songs
+				this.setRencentlyPlaySongs(this.songInfo)
+				
 				// 歌曲开始播放
 				uni.showToast({
 					title: "加载中",
@@ -115,6 +118,30 @@
 				// 通过 兄弟组件方式的传值来向 player组件传递数据
 				eventBus.$emit('getPrevSongInfo', this.songIndex)
 			},
+			
+			// 设置最近播放歌曲
+			setRencentlyPlaySongs(songInfo) {
+				let data = uni.getStorageSync('recently_songs')
+				if(!data) { // 本地存储中没有最近播放这个 key时 recently_songs 
+					let recentlySongs = []
+					recentlySongs.push(songInfo)
+					uni.setStorageSync('recently_songs', {recentlySongs})
+				} else {  // 本地存储已经存在一些最近播放的歌曲
+					let recentlySongs = data.recentlySongs
+					let isSomeTrue = false
+					isSomeTrue = recentlySongs.every((item) => {
+						return item.id != songInfo.id
+					})
+					if(isSomeTrue) {
+						// 本地存储只存放 10 条最近播放歌曲，如果本地存储歌曲已经存放了10条最近播放歌曲 则删除 第一个 后 向末尾添加一个
+						if(recentlySongs.length >= 10) {
+							recentlySongs.splice(0, 1)
+						}
+						recentlySongs.push(songInfo)
+						uni.setStorageSync('recently_songs', {recentlySongs})
+					} 
+				}
+			}
 		},
 		watch: {
 			isPlay: function() {

@@ -4,7 +4,7 @@
 		  <view class="musiclist-container" @tap="jumpPlayer(item, index)">
 		    <view class="musiclist-index">{{index+1}}</view>
 		    <view class="musiclist-info">
-		      <view class="musiclist-name">
+		      <view class="musiclist-name" :class="currentPlaySongIndex == index?'musiclist-name-active': ''">
 		        {{item.name}}
 		        <text class="musiclist-alia">{{item.alia.length==0?"":item.alia[0]}}</text>
 		      </view>
@@ -24,10 +24,12 @@
 		},
 		data() {
 			return {
+				currentPlaySongIndex: null
 			};
 		},
 		methods: {
 			jumpPlayer(info, index) {
+				this.currentPlaySongIndex = index
 				this.$emit("goPlayer", info, index)
 			}
 		}
@@ -51,7 +53,7 @@
 		.musiclist-info{
 			flex-grow: 1;
 			.musiclist-name{
-				font-size: 34rpx;
+				font-size: 30rpx;
 				font-weight: 500;
 				color: #333;
 				overflow: hidden;
@@ -62,6 +64,10 @@
 					color: #333;
 					margin-left: 6rpx;
 				}
+			}
+			
+			.musiclist-name-active {
+				color: #e74c3c;
 			}
 			
 			.musiclist-singer{

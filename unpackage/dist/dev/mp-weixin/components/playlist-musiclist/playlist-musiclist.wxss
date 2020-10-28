@@ -48,7 +48,7 @@
           flex-grow: 1;
 }
 .musiclist-box .musiclist-container .musiclist-info .musiclist-name.data-v-becd2478 {
-  font-size: 34rpx;
+  font-size: 30rpx;
   font-weight: 500;
   color: #333;
   overflow: hidden;
@@ -59,6 +59,9 @@
 .musiclist-box .musiclist-container .musiclist-info .musiclist-name .musiclist-alia.data-v-becd2478 {
   color: #333;
   margin-left: 6rpx;
+}
+.musiclist-box .musiclist-container .musiclist-info .musiclist-name-active.data-v-becd2478 {
+  color: #e74c3c;
 }
 .musiclist-box .musiclist-container .musiclist-info .musiclist-singer.data-v-becd2478 {
   font-size: 24rpx;
